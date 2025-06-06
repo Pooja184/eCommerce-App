@@ -5,6 +5,7 @@ import 'dotenv/config';              // Loads environment variables from .env
 import cors from 'cors';             // Enables Cross-Origin Resource Sharing
 import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
+import userRouter from './routes/user.route.js';
 
 //App config
 const app=express();                // Initialize the Express application
@@ -18,6 +19,7 @@ app.use(cors());
 
 
 //api endpoints
+app.use('/api/user',userRouter);
 
 app.get('/',(req,res)=>{
     res.send("API Working")
