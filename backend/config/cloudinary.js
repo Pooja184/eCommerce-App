@@ -1,5 +1,5 @@
 // This file is used to configure cloudinary storage
-
+import 'dotenv/config'; 
 import {v2 as cloudinary} from "cloudinary"
 
 // Async function to configure Cloudinary using environment variables
