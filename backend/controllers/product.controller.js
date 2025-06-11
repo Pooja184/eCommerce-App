@@ -1,5 +1,6 @@
 
 import {v2 as cloudinary} from 'cloudinary';
+import productModel from '../models/product.model.js'
 //function for add product
 
 
@@ -14,20 +15,41 @@ const addProduct= async (req,res)=>{
         const image3 = req.files.image3 && req.files.image3[0]
         const image4 = req.files.image4 &&  req.files.image4[0]
 
-        // This line creates a new array called images that only includes the image files that were actually uploaded.
+        // This line creates a new array called images that only includes the image files that were actually uploaded.(Collect all uploaded image files into a single array (exclude undefined))
         const images=[image1,image2,image3,image4].filter((item)=>item !== undefined);
 
+        // Upload each image to Cloudinary and get their secure URLs
         let imagesUrl= await Promise.all(
             images.map(async (item)=>{
                 let result  = await cloudinary.uploader.upload(item.path, {resource_type: 'image'});
-                return result.secure_url
+                return result.secure_url;  // Return only the secure URL
             })
         )
 
-        console.log(name,description,price,category,subCategory,sizes,bestSeller);
-        console.log(imagesUrl);
+        // console.log(name,description,price,category,subCategory,sizes,bestSeller);
+        // console.log(imagesUrl);
 
-        res.json({});
+        // Prepare the final product data object
+        const productData={
+            name,
+            description,
+            category,
+            price: Number(price),
+            subCategory,
+            bestSeller: bestSeller === "true" ? true : false,
+            sizes : JSON.parse(sizes),
+            image : imagesUrl,
+            date: Date.now()
+        }
+
+        // console.log(productData);
+
+        // Create and save the new product document in MongoDB
+        const product = new productModel(productData);
+        await product.save()
+
+        // Send success response
+        res.json({success:true,message:"Product Added"});
 
     } catch (error) {
         console.log(error)
