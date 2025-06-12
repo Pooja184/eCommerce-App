@@ -87,10 +87,28 @@ const registerUser = async(req,res)=>{
     }
 }
 
-
 //Route for admin login
-const adminLogin =async()=>{
-
+const adminLogin =async(req,res)=>{
+    try {
+        const {email,password} = req.body;
+        // Compare provided credentials with environment-defined admin credentials
+        if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){
+            // If credentials match, generate a JWT token for session/authentication
+            // Note: Including both email and password in the token payload is not recommended for production.
+            // Ideally, include a unique identifier (like "admin" or user ID) for security.
+            const token = jwt.sign(email+password,process.env.JWT_SECRET);
+            // Send success response with the generated token
+            res.json({success:true,token})
+        }else{
+            res.json({success:false,message:"Invalid creadentials"})
+        }
+    } catch (error) {
+         console.log(error);
+        res.json({
+            success:false,
+            message:error.message
+        })
+    }
 }
 
 
