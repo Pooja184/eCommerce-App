@@ -86,7 +86,17 @@ const removeProduct= async (req,res)=>{
 
 //function for single product info
 const singleProduct= async (req,res)=>{
-    
+    try {
+        // Destructure productId from the request body
+        const {productId} = req.body;
+        // Find the product in the database using its unique ID (_id)
+        const product = await productModel.findById(productId);
+        // Send the product data in the response with success = true
+        res.json({success:true,product})
+    } catch (error) {
+         console.log(error)
+        res.json({success:false,message:error.message});
+    }
 }
 
 export {listProduct,addProduct,removeProduct,singleProduct}
