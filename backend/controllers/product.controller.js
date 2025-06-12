@@ -1,9 +1,9 @@
 
 import {v2 as cloudinary} from 'cloudinary';
 import productModel from '../models/product.model.js'
+
+
 //function for add product
-
-
 const addProduct= async (req,res)=>{
     try {
         const {name,description,price,category,subCategory,sizes,bestSeller} =req.body;
@@ -59,13 +59,21 @@ const addProduct= async (req,res)=>{
 
 //function for list product
 const listProduct= async (req,res)=>{
-    
+    try {
+        // Fetch all product documents from the database
+        const products = await productModel.find({});
+        // Send success response with the list of products
+        res.json({success:true,products})
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
 }
 
 
 //function for removing product
 const removeProduct= async (req,res)=>{
-    
+   
 }
 
 //function for single product info
