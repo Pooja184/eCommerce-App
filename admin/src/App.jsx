@@ -23,7 +23,7 @@ const App = () => {
   // This helps persist the token across page reloads.
   useEffect(()=>{
     localStorage.setItem('token',token)
-  },[token])
+  },[token]);
   return (
     <div className='bg-gray-50 min-h-screen '>
       {/* Toast notifications container */}
