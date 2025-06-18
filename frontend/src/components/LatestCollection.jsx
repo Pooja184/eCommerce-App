@@ -11,7 +11,9 @@ const LatestCollection = () => {
 
   useEffect(()=>{
     setLatestProducts(products.slice(0,10));
-  },[])
+  },[products]);
+//here we add products later after getting data from backend
+
 
   return (
     <div className='my-10'>

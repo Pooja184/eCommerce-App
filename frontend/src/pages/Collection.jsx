@@ -68,7 +68,8 @@ const Collection = () => {
 
   useEffect(()=>{
     applyFilter();
-  },[category,subCategory,search,showSearch]);
+  },[category,subCategory,search,showSearch,products]);
+  //we add product after getting data from backend
 
   useEffect(()=>{
     sortProduct();

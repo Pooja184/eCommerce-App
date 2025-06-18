@@ -8,9 +8,10 @@ const BestSeller = () => {
     const [bestSeller,setBestSeller]=useState([]);
 
     useEffect(()=>{
-        const bestProduct=products.filter((item)=>(item.bestseller));
+        const bestProduct=products.filter((item)=>(item.bestSeller));
         setBestSeller(bestProduct.slice(0,5));
-    },[])
+    },[products]);
+    //here we add products later after getting data from backend
   return (
     <div className='my-10'>
         <div className='text-center text-3xl py-8'>
