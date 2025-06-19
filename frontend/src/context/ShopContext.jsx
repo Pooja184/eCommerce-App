@@ -14,6 +14,7 @@ const ShopContextProvider = (props) => {
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
   const [products,setProducts]=useState([]);
+  const [token,setToken]=useState('');
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
@@ -98,6 +99,13 @@ const getCartCount=()=>{
     getProductData()
   },[])
 
+  useEffect(()=>{
+    // If there is no token in state but token exists in localStorage (from previous login),
+  // then set the token in state to keep the user logged in after page refresh
+    if(!token && localStorage.getItem('token')){
+      setToken(localStorage.getItem('token'));
+    }
+  },[]);
 
   const value = {
     products,
@@ -108,12 +116,15 @@ const getCartCount=()=>{
     showSearch,
     setShowSearch,
     cartItems,
+    setCartItems,
     addToCart,
     getCartCount,
     updateQuantity,
     getCartAmount,
     navigate,
-    backendUrl
+    backendUrl,
+    setToken,
+    token
   };
 
   return (
