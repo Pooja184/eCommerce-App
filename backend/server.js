@@ -1,5 +1,3 @@
-
-
 import express from 'express';
 import 'dotenv/config';              // Loads environment variables from .env
 import cors from 'cors';             // Enables Cross-Origin Resource Sharing
@@ -8,6 +6,7 @@ import connectCloudinary from './config/cloudinary.js';
 import userRouter from './routes/user.route.js';
 import productRouter from './routes/product.route.js';
 import cartRouter from './routes/cart.route.js';
+import orderRouter from './routes/order.route.js';
 
 //App config
 const app=express();                // Initialize the Express application
@@ -24,6 +23,8 @@ app.use(cors());
 app.use('/api/user',userRouter);
 app.use('/api/product',productRouter);
 app.use('/api/cart',cartRouter);
+app.use('/api/order',orderRouter);
+
 
 
 app.get('/',(req,res)=>{
